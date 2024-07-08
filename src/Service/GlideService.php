@@ -21,29 +21,51 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class GlideService
 {
     private Server $server;
-    private SymfonyResponseFactory $responseFactory;
     private string $signKey;
 
+    /**
+     * Constructor.
+     *
+     * @param array $config The Glide configuration.
+     * @param Request $request The Symfony request object.
+     * @param string $signKey The Glide signature key.
+     */
     public function __construct(array $config, Request $request, string $signKey)
     {
         $this->server = ServerFactory::create($config);
-        $this->responseFactory = new SymfonyResponseFactory($request);
+        $this->server->setResponseFactory(new SymfonyResponseFactory($request));
         $this->signKey = $signKey;
     }
 
+    /**
+     * Gets the image response.
+     *
+     * @param string $path The image path.
+     * @param array $params The Glide parameters.
+     *
+     * @return Response The image response.
+     *
+     * @throws NotFoundHttpException If the image is not found.
+     */
     public function getImageResponse(string $path, array $params): Response
     {
         try {
             $this->validateSignature($path, $params);
-            $processedPath = $this->getProcessedPath($path);
-            return $this->responseFactory->create($this->server->getCache(), $processedPath);
-        } catch (\Exception $e) {
+            return $this->server->getImageResponse($path, $params);
+        } catch (FileNotFoundException $e) {
             throw new NotFoundHttpException('Image not found', $e);
+        } catch (\Exception $e) {
+            throw new NotFoundHttpException('An error occurred while processing the image', $e);
         }
     }
 
     /**
-     * @throws SignatureException
+     * Validates the Glide signature.
+     *
+     * @param string $path The image path.
+     * @param array $params The Glide parameters.
+     *
+     * @throws SignatureException If the signature is invalid.
      */
     private function validateSignature(string $path, array $params): void
     {
@@ -51,19 +73,21 @@ class GlideService
         $signature->validateRequest($path, $params);
     }
 
+    /**
+     * Creates a Glide signature object.
+     *
+     * @return SignatureInterface The Glide signature object.
+     */
     private function createSignature(): SignatureInterface
     {
         return SignatureFactory::create($this->signKey);
     }
 
     /**
-     * @throws FileNotFoundException
+     * Gets the presets defined in the Glide configuration.
+     *
+     * @return array The Glide presets.
      */
-    private function getProcessedPath(string $path): string
-    {
-        return $this->server->getSourcePath($path);
-    }
-
     public function getPresets(): array
     {
         return $this->server->getPresets();
