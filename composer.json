@@ -1,0 +1,29 @@
+{
+    "name": "dahromy/glide-symfony",
+    "description": "Symfony bundle for Glide image manipulation library",
+    "type": "symfony-bundle",
+    "require": {
+        "php": ">=8.0",
+        "symfony/framework-bundle": "^6.0|^7.0",
+        "league/glide-symfony": "2.0.1",
+        "symfony/twig-bundle": "^6.0|^7.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "DahRomy\\Glide\\": "src/"
+        }
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "^6.0|^7.0"
+        }
+    },
+    "authors": [
+        {
+            "name": "dahromy",
+            "email": "romeorazaf@gmail.com"
+        }
+    ]
+}
