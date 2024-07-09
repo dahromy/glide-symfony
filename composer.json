@@ -4,9 +4,9 @@
     "type": "symfony-bundle",
     "require": {
         "php": ">=7.4",
-        "symfony/framework-bundle": "^5.0|^6.0",
+        "symfony/framework-bundle": "^5.0|^6.0|^7.0",
         "league/glide-symfony": "2.0.1",
-        "symfony/twig-bundle": "^5.0|^6.0"
+        "symfony/twig-bundle": "^5.0|^6.0|^7.0"
     },
     "license": "MIT",
     "autoload": {
@@ -17,7 +17,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "^5.0|^6.0"
+            "require": "^5.0|^6.0|^7.0"
         }
     },
     "authors": [
