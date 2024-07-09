@@ -14,15 +14,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('source')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('source_path_prefix')->defaultValue('')->end()
-            ->scalarNode('cache')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('cache_path_prefix')->defaultValue('')->end()
-            ->scalarNode('temp_dir')->defaultValue('%kernel.cache_dir%/glide')->end()
-            ->booleanNode('group_cache_in_folders')->defaultTrue()->end()
-            ->booleanNode('cache_with_file_extensions')->defaultFalse()->end()
+            ->scalarNode('source')->defaultValue('%kernel.project_dir%/public/uploads')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('cache')->isRequired()->defaultValue('%kernel.project_dir%/var/cache/glide')->cannotBeEmpty()->end()
+            ->scalarNode('signature_key')->isRequired()->defaultValue('%env(GLIDE_SIGNATURE_KEY)%')->cannotBeEmpty()->end()
             ->scalarNode('watermarks')->defaultNull()->end()
-            ->scalarNode('watermarks_path_prefix')->defaultValue('')->end()
             ->enumNode('driver')->values(['gd', 'imagick'])->defaultValue('gd')->end()
             ->integerNode('max_image_size')->defaultNull()->end()
             ->arrayNode('defaults')->useAttributeAsKey('name')->prototype('scalar')->end()->end()
@@ -41,8 +36,7 @@ class Configuration implements ConfigurationInterface
             ->prototype('scalar')->end()
             ->end()
             ->end()
-            ->scalarNode('base_url')->defaultValue('')->end()
-            ->scalarNode('signature_key')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('base_url')->defaultValue('/images/')->end()
             ->end();
 
         return $treeBuilder;
