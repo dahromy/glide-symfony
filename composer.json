@@ -3,10 +3,10 @@
     "description": "Symfony bundle for Glide image manipulation library",
     "type": "symfony-bundle",
     "require": {
-        "php": ">=8.0",
-        "symfony/framework-bundle": "^6.0|^7.0",
+        "php": ">=7.4",
+        "symfony/framework-bundle": "^5.0|^6.0",
         "league/glide-symfony": "2.0.1",
-        "symfony/twig-bundle": "^6.0|^7.0"
+        "symfony/twig-bundle": "^5.0|^6.0"
     },
     "license": "MIT",
     "autoload": {
@@ -17,11 +17,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "^6.0|^7.0",
-            "endpoint": [
-                "https://api.github.com/repos/dahromy/glide-symfony-recipe/contents/manifest.json",
-                "flex://defaults"
-            ]
+            "require": "^5.0|^6.0"
         }
     },
     "authors": [

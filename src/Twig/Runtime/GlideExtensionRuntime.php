@@ -7,11 +7,19 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class GlideExtensionRuntime
 {
+    private UrlGeneratorInterface $router;
+    private GlideService $glideService;
+    private string $baseUrl;
+
     public function __construct(
-        private UrlGeneratorInterface $router,
-        private GlideService $glideService,
-        private string $baseUrl
-    ) {}
+        UrlGeneratorInterface $router,
+        GlideService $glideService,
+        string $baseUrl
+    ) {
+        $this->router = $router;
+        $this->glideService = $glideService;
+        $this->baseUrl = $baseUrl;
+    }
 
     /**
      * Apply glide filter to the given path and return the generated image URL.

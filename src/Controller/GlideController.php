@@ -5,14 +5,17 @@ namespace DahRomy\Glide\Controller;
 use DahRomy\Glide\Service\GlideService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class GlideController
 {
+    private GlideService $glideService;
+
     public function __construct(
-        private GlideService $glideService
+        GlideService $glideService
     )
     {
+        $this->glideService = $glideService;
     }
 
     /**
@@ -24,7 +27,6 @@ class GlideController
      * @param Request $request The request instance.
      * @return Response The response containing the asset image.
      */
-    #[Route('/glide/{path<.+>}', name: 'dahromy_glide_asset', methods: ['GET'])]
     public function asset(string $path, Request $request): Response
     {
         $parameters = $request->query->all();
