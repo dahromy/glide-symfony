@@ -22,16 +22,8 @@ class DahRomyGlideExtension extends Extension
 
         $container->setParameter('dahromy_glide.config', $config);
         $container->setParameter('dahromy_glide.base_url', $config['base_url']);
-
-        // Copie du fichier de configuration par défaut si nécessaire
-        $configDir = $container->getParameter('kernel.project_dir') . '/config/packages';
-        $configFile = $configDir . '/dahromy_glide.yaml';
-
-        if (!file_exists($configFile)) {
-            if (!is_dir($configDir)) {
-                mkdir($configDir, 0755, true);
-            }
-            copy(__DIR__ . '/../../Resources/config/default_config/dahromy_glide.yaml', $configFile);
-        }
+        $container->setParameter('dahromy_glide.signature_key', $config['signature_key']);
+        $container->setParameter('dahromy_glide.source', $config['source']);
+        $container->setParameter('dahromy_glide.cache', $config['cache']);
     }
 }
