@@ -1,7 +1,8 @@
 <?php
 
-namespace DahRomy\Glide\Twig\Extension;
+namespace DahRomy\Glide\Twig;
 
+use Closure;
 use DahRomy\Glide\Service\GlideService;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -13,11 +14,8 @@ class GlideExtension extends AbstractExtension
     private GlideService $glideService;
     private string $baseUrl;
 
-    public function __construct(
-        UrlGeneratorInterface $router,
-        GlideService $glideService,
-        string $baseUrl
-    ) {
+    public function __construct(UrlGeneratorInterface $router, GlideService $glideService, string $baseUrl)
+    {
         $this->router = $router;
         $this->glideService = $glideService;
         $this->baseUrl = $baseUrl;
@@ -26,7 +24,7 @@ class GlideExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('glide', [$this, 'glideFilter'], ['is_safe' => ['html']]),
+            new TwigFilter('glide', Closure::fromCallable([$this, 'glideFilter']), ['is_safe' => ['html']]),
         ];
     }
 
@@ -43,8 +41,9 @@ class GlideExtension extends AbstractExtension
         if ($preset) {
             $params = array_merge($this->glideService->getPresets()[$preset] ?? [], $params);
         }
-        $params['path'] = ltrim($path, '/');
-        return $this->generateImageUrl($params);
+
+        $path = ltrim($path, '/');
+        return $this->generateImageUrl($path, $params);
     }
 
     /**
@@ -54,8 +53,15 @@ class GlideExtension extends AbstractExtension
      *
      * @return string The generated image URL.
      */
-    private function generateImageUrl(array $params): string
+    private function generateImageUrl($path, array $params): string
     {
+        $params = $this->glideService->buildParams($params);
+
+        $signature = $this->glideService->generateSignature($path, $params);
+
+        $params = array_merge($params, $signature);
+        $params['path'] = $path;
+
         return $this->baseUrl . $this->router->generate('dahromy_glide_asset', $params);
     }
 }

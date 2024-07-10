@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
             ->prototype('scalar')->end()
             ->end()
             ->end()
-            ->scalarNode('base_url')->defaultValue('/images/')->end()
+            ->scalarNode('base_url')->defaultValue('')->end()
             ->end();
 
         return $treeBuilder;

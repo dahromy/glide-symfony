@@ -9,32 +9,38 @@ use League\Glide\ServerFactory;
 use League\Glide\Signatures\SignatureException;
 use League\Glide\Signatures\SignatureFactory;
 use League\Glide\Signatures\SignatureInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class GlideService
  *
- * This class provides functionalities to handle Glide image manipulation.
+ * This class provides functionality to handle Glide image manipulation.
  */
 class GlideService
 {
     private Server $server;
     private string $signKey;
+    private SignatureInterface $signature;
 
     /**
      * Constructor.
      *
      * @param array $config The Glide configuration.
-     * @param Request $request The Symfony request object.
+     * @param RequestStack $requestStack
      * @param string $signKey The Glide signature key.
+     * @param SignatureInterface $signature
      */
-    public function __construct(array $config, Request $request, string $signKey)
+    public function __construct(array $config, RequestStack $requestStack, string $signKey, SignatureInterface $signature)
     {
+        $request = $requestStack->getCurrentRequest();
+
         $this->server = ServerFactory::create($config);
+
         $this->server->setResponseFactory(new SymfonyResponseFactory($request));
         $this->signKey = $signKey;
+        $this->signature = $signature;
     }
 
     /**
@@ -91,5 +97,15 @@ class GlideService
     public function getPresets(): array
     {
         return $this->server->getPresets();
+    }
+
+    public function generateSignature(string $path, array $params = []): array
+    {
+        return $this->signature->addSignature($path, $params);
+    }
+
+    public function buildParams(array $params = []): array
+    {
+        return $this->server->getAllParams($params);
     }
 }
