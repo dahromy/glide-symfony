@@ -91,6 +91,25 @@ class GlideService
         }
     }
 
+    public function validateParams(array $params): array
+    {
+        $validParams = [];
+        foreach ($params as $key => $value) {
+            if ($this->isValidGlideParameter($key, $value)) {
+                $validParams[$key] = $value;
+            }
+        }
+        return $validParams;
+    }
+
+    private function isValidGlideParameter(string $key, $value): bool
+    {
+        // Implement validation logic for Glide parameters
+        // This is a basic example, you should expand it based on Glide's allowed parameters
+        $allowedParams = ['w', 'h', 'fit', 'crop', 'fm', 'q'];
+        return in_array($key, $allowedParams);
+    }
+
     /**
      * Validates the Glide signature.
      *
