@@ -25,6 +25,8 @@ class GlideService
     private Server $server;
     private string $signKey;
     private SignatureInterface $signature;
+    private string $baseUrl;
+    private array $presets;
 
     /**
      * Constructor.
@@ -33,8 +35,10 @@ class GlideService
      * @param RequestStack $requestStack
      * @param string $signKey The Glide signature key.
      * @param SignatureInterface $signature
+     * @param string $baseUrl The base URL for image generation.
+     * @param array $presets The presets configuration.
      */
-    public function __construct(array $config, RequestStack $requestStack, string $signKey, SignatureInterface $signature)
+    public function __construct(array $config, RequestStack $requestStack, string $signKey, SignatureInterface $signature, string $baseUrl, array $presets = [])
     {
         $request = $requestStack->getCurrentRequest();
 
@@ -43,6 +47,24 @@ class GlideService
         $this->server->setResponseFactory(new SymfonyResponseFactory($request));
         $this->signKey = $signKey;
         $this->signature = $signature;
+        $this->baseUrl = $baseUrl;
+        $this->presets = $presets;
+    }
+
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
+    public function getImageUrl(string $path, array $params): string
+    {
+        $params['path'] = $path;
+        return $this->getBaseUrl() . $this->router->generate('dahromy_glide_asset', $params);
+    }
+
+    public function getPresetParams(string $preset): array
+    {
+        return $this->presets[$preset] ?? [];
     }
 
     /**
