@@ -2,3 +2,4 @@ vendor/
 .idea/
 .lando.yml
 composer.lock
+.aider*

@@ -17,17 +17,14 @@ return static function (ContainerConfigurator $configurator): void {
     $services->set(GlideService::class)
         ->args([
             '%dahromy_glide.config%',
-            service('request_stack'),
             '%dahromy_glide.signature_key%',
-            service(Signature::class)
+            service('request_stack'),
+            service(Signature::class),
+            service('router')
         ]);
 
     $services->set(GlideExtension::class)
-        ->args([
-            service('router'),
-            service(GlideService::class),
-            '%dahromy_glide.base_url%'
-        ])
+        ->args([service(GlideService::class)])
         ->tag('twig.extension');
 
     $services->set(GlideController::class)

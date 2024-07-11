@@ -21,10 +21,7 @@ class DahRomyGlideExtension extends Extension
         $loader->load('services.php');
 
         $container->setParameter('dahromy_glide.config', $config);
-        $container->setParameter('dahromy_glide.base_url', $config['base_url']);
-        $container->setParameter('dahromy_glide.signature_key', $config['signature_key']);
-        $container->setParameter('dahromy_glide.source', $config['source']);
-        $container->setParameter('dahromy_glide.cache', $config['cache']);
+        $container->setParameter('dahromy_glide.signature_key', '%env(GLIDE_SIGNATURE_KEY)%');
     }
 
     public function getAlias(): string

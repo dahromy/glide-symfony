@@ -4,21 +4,16 @@ namespace DahRomy\Glide\Twig;
 
 use Closure;
 use DahRomy\Glide\Service\GlideService;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class GlideExtension extends AbstractExtension
 {
-    private UrlGeneratorInterface $router;
     private GlideService $glideService;
-    private string $baseUrl;
 
-    public function __construct(UrlGeneratorInterface $router, GlideService $glideService, string $baseUrl)
+    public function __construct(GlideService $glideService)
     {
-        $this->router = $router;
         $this->glideService = $glideService;
-        $this->baseUrl = $baseUrl;
     }
 
     public function getFilters(): array
@@ -38,10 +33,10 @@ class GlideExtension extends AbstractExtension
      */
     public function glideFilter(string $path, array $params = [], string $preset = null): string
     {
-        $presetParams = $preset ? ($this->glideService->getPresets()[$preset] ?? []) : [];
+        $presetParams = $preset ? $this->glideService->getPresetParams($preset) : [];
         $params = array_merge($presetParams, $params);
 
-        return $this->generateImageUrl(ltrim($path, '/'), $params);
+        return $this->generateSignedImageUrl(ltrim($path, '/'), $params);
     }
 
     /**
@@ -55,6 +50,7 @@ class GlideExtension extends AbstractExtension
     {
         $params = $this->glideService->normalizeParams($params);
         $signedParams = $this->glideService->generateSignedParams($path, $params);
+
         return $this->glideService->getImageUrl($path, $signedParams);
     }
 }

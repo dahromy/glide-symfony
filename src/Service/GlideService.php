@@ -7,13 +7,13 @@ use League\Glide\Responses\SymfonyResponseFactory;
 use League\Glide\Server;
 use League\Glide\ServerFactory;
 use League\Glide\Signatures\SignatureException;
-use League\Glide\Signatures\SignatureFactory;
 use League\Glide\Signatures\SignatureInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class GlideService
@@ -23,43 +23,40 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class GlideService
 {
     private Server $server;
-    private string $signKey;
     private SignatureInterface $signature;
-    private string $baseUrl;
-    private array $presets;
+    private UrlGeneratorInterface $router;
+    private array $presets = [];
 
     /**
      * Constructor.
      *
      * @param array $config The Glide configuration.
-     * @param RequestStack $requestStack
      * @param string $signKey The Glide signature key.
+     * @param RequestStack $requestStack
      * @param SignatureInterface $signature
-     * @param string $baseUrl The base URL for image generation.
-     * @param array $presets The presets configuration.
+     * @param UrlGeneratorInterface $router
      */
-    public function __construct(array $config, RequestStack $requestStack, string $signKey, SignatureInterface $signature, string $baseUrl, array $presets = [])
+    public function __construct(
+        array $config,
+        string $signKey,
+        RequestStack $requestStack,
+        SignatureInterface $signature,
+        UrlGeneratorInterface $router
+    )
     {
         $request = $requestStack->getCurrentRequest();
 
         $this->server = ServerFactory::create($config);
-
-        $this->server->setResponseFactory(new SymfonyResponseFactory($request));
-        $this->signKey = $signKey;
         $this->signature = $signature;
-        $this->baseUrl = $baseUrl;
-        $this->presets = $presets;
-    }
-
-    public function getBaseUrl(): string
-    {
-        return $this->baseUrl;
+        $this->server->setResponseFactory(new SymfonyResponseFactory($request));
+        $this->router = $router;
+        $this->presets = $config['presets'] ?? [];
     }
 
     public function getImageUrl(string $path, array $params): string
     {
         $params['path'] = $path;
-        return $this->getBaseUrl() . $this->router->generate('dahromy_glide_asset', $params);
+        return $this->router->generate('dahromy_glide_asset', $params);
     }
 
     public function getPresetParams(string $preset): array
@@ -104,9 +101,7 @@ class GlideService
 
     private function isValidGlideParameter(string $key, $value): bool
     {
-        // Implement validation logic for Glide parameters
-        // This is a basic example, you should expand it based on Glide's allowed parameters
-        $allowedParams = ['w', 'h', 'fit', 'crop', 'fm', 'q'];
+        $allowedParams = ['or', 'flip', 'crop', 'w', 'h', 'fit', 'dpr', 'bri', 'con', 'gam', 'sharp', 'blur', 'pixel', 'filt', 'mark', 'markw', 'markh', 'markx', 'marky', 'markpad', 'markpos', 'markalpha', 'bg', 'border', 'q', 'fm'];
         return in_array($key, $allowedParams);
     }
 
