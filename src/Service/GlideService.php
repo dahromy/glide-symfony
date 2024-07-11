@@ -75,18 +75,7 @@ class GlideService
      */
     private function validateSignature(string $path, array $params): void
     {
-        $signature = $this->createSignature();
-        $signature->validateRequest($path, $params);
-    }
-
-    /**
-     * Creates a Glide signature object.
-     *
-     * @return SignatureInterface The Glide signature object.
-     */
-    private function createSignature(): SignatureInterface
-    {
-        return SignatureFactory::create($this->signKey);
+        $this->signature->validateRequest($path, $params);
     }
 
     /**

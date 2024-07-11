@@ -24,8 +24,6 @@ class GlideController
      */
     public function asset(string $path, Request $request): Response
     {
-        $parameters = $request->query->all();
-
-        return $this->glideService->getImageResponse($path, $parameters);
+        return $this->glideService->getImageResponse($path, $request->query->all());
     }
 }
