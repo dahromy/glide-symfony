@@ -23,7 +23,7 @@ class GlideController
      * @param Request $request The request instance.
      * @return Response The response containing the asset image.
      */
-    public function asset(string $path, Request $request): Response
+    public function serveImage(string $path, Request $request): Response
     {
         if (empty($path)) {
             throw new BadRequestHttpException('Image path cannot be empty');

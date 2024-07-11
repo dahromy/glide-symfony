@@ -92,12 +92,12 @@ class GlideService
         return $this->server->getPresets();
     }
 
-    public function generateSignature(string $path, array $params = []): array
+    public function generateSignedParams(string $path, array $params = []): array
     {
         return $this->signature->addSignature($path, $params);
     }
 
-    public function buildParams(array $params = []): array
+    public function normalizeParams(array $params = []): array
     {
         return $this->server->getAllParams($params);
     }
