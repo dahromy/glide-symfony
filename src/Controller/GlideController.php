@@ -24,6 +24,9 @@ class GlideController
      */
     public function asset(string $path, Request $request): Response
     {
+        if (empty($path)) {
+            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Image path cannot be empty');
+        }
         return $this->glideService->getImageResponse($path, $request->query->all());
     }
 }

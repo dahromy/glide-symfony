@@ -60,8 +60,10 @@ class GlideService
             return $this->server->getImageResponse($path, $params);
         } catch (FileNotFoundException $e) {
             throw new NotFoundHttpException('Image not found', $e);
+        } catch (SignatureException $e) {
+            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('Invalid image signature', $e);
         } catch (\Exception $e) {
-            throw new NotFoundHttpException('An error occurred while processing the image', $e);
+            throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, 'An error occurred while processing the image', $e);
         }
     }
 
