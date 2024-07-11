@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
                             })
                 ->end()
             ->useAttributeAsKey('name')
-            ->prototype('scalar')->end()
+            ->prototype('array')->end()
             ->end()
             ->end()
             ->scalarNode('base_url')->defaultValue('')->end()
