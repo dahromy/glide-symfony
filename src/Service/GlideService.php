@@ -12,6 +12,8 @@ use League\Glide\Signatures\SignatureInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class GlideService
@@ -61,9 +63,9 @@ class GlideService
         } catch (FileNotFoundException $e) {
             throw new NotFoundHttpException('Image not found', $e);
         } catch (SignatureException $e) {
-            throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('Invalid image signature', $e);
+            throw new AccessDeniedHttpException('Invalid image signature', $e);
         } catch (\Exception $e) {
-            throw new \Symfony\Component\HttpKernel\Exception\HttpException(500, 'An error occurred while processing the image', $e);
+            throw new HttpException(500, 'An error occurred while processing the image', $e);
         }
     }
 

@@ -5,6 +5,7 @@ namespace DahRomy\Glide\Controller;
 use DahRomy\Glide\Service\GlideService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class GlideController
 {
@@ -25,7 +26,7 @@ class GlideController
     public function asset(string $path, Request $request): Response
     {
         if (empty($path)) {
-            throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Image path cannot be empty');
+            throw new BadRequestHttpException('Image path cannot be empty');
         }
         return $this->glideService->getImageResponse($path, $request->query->all());
     }
