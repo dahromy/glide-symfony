@@ -18,12 +18,16 @@ composer require dahromy/glide-bundle
 
 ## Configuration
 
-After installing the bundle, you need to configure it in your `config/packages/glide.yaml` file:
+After installing the bundle, you need to configure it in your `config/packages/glide.yaml` file. Here's an example configuration with default values:
 
 ```yaml
 glide:
     source: '%kernel.project_dir%/public/images'
     cache: '%kernel.project_dir%/public/cache'
+    max_image_size: 2000x2000
+    driver: gd # Options: gd, imagick
+    use_signed_urls: true
+    sign_key: '%env(GLIDE_SIGN_KEY)%'
     presets:
         small:
             w: 200
@@ -34,6 +38,18 @@ glide:
             h: 400
             fit: crop
 ```
+
+### Configuration Options
+
+- `source`: The directory where your source images are stored.
+- `cache`: The directory where manipulated images will be cached.
+- `max_image_size`: The maximum allowed image dimensions (width x height).
+- `driver`: The image processing library to use (GD or Imagick).
+- `use_signed_urls`: Whether to use signed URLs for security (recommended).
+- `sign_key`: The secret key used for signing URLs (should be set in your .env file).
+- `presets`: Predefined sets of image manipulation parameters.
+
+You can customize these values according to your needs.
 
 ## Usage
 
