@@ -55,7 +55,7 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-}
+
     private function addImageManipulationOptions(ArrayNodeDefinition $node): void
     {
         $node
@@ -88,3 +88,4 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('border')->end()
             ->end();
     }
+}
