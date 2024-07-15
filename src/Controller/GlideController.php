@@ -22,7 +22,8 @@ class GlideController
             throw new BadRequestHttpException('Image path cannot be empty');
         }
 
-        $params = $this->glideService->validateParams($request->query->all());
-        return $this->glideService->getImageResponse($path, $params, $request);
+        $params = $request->query->all();
+        $validatedParams = $this->glideService->validateParams($params);
+        return $this->glideService->getImageResponse($path, $validatedParams, $request);
     }
 }

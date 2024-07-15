@@ -49,7 +49,9 @@ class GlideService
 
     public function validateParams(array $params): array
     {
-        return $this->server->getApi()->validateParams($params);
+        // Remove any params that are not allowed by the server
+        $allowedParams = $this->server->getApi()->getAllParams();
+        return array_intersect_key($params, array_flip($allowedParams));
     }
 
     /**
