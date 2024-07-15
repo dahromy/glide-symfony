@@ -9,7 +9,7 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('dahromy_glide');
+        $treeBuilder = new TreeBuilder('glide');
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode

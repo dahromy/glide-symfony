@@ -56,7 +56,7 @@ class GlideService
     public function getImageUrl(string $path, array $params): string
     {
         $params['path'] = $path;
-        return $this->router->generate('dahromy_glide_asset', $params);
+        return $this->router->generate('glide_asset', $params);
     }
 
     public function getPresetParams(string $preset): array

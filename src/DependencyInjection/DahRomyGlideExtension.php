@@ -20,12 +20,12 @@ class DahRomyGlideExtension extends Extension
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../Resources/config'));
         $loader->load('services.php');
 
-        $container->setParameter('dahromy_glide.config', $config);
-        $container->setParameter('dahromy_glide.signature_key', '%env(GLIDE_SIGNATURE_KEY)%');
+        $container->setParameter('glide.config', $config);
+        $container->setParameter('glide.signature_key', '%env(GLIDE_SIGNATURE_KEY)%');
     }
 
     public function getAlias(): string
     {
-        return 'dahromy_glide';
+        return 'glide';
     }
 }

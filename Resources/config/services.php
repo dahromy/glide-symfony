@@ -12,12 +12,12 @@ return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
 
     $services->set(Signature::class)
-        ->args(['%dahromy_glide.signature_key%']);
+        ->args(['%glide.signature_key%']);
 
     $services->set(GlideService::class)
         ->args([
-            '%dahromy_glide.config%',
-            '%dahromy_glide.signature_key%',
+            '%glide.config%',
+            '%glide.signature_key%',
             service('request_stack'),
             service(Signature::class),
             service('router')
