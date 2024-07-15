@@ -16,20 +16,13 @@ class GlideController
         $this->glideService = $glideService;
     }
 
-    /**
-     * Retrieves the asset image using the Glide service.
-     *
-     * @param string $path The path of the asset image.
-     * @param Request $request The request instance.
-     * @return Response The response containing the asset image.
-     */
     public function serveImage(Request $request, string $path): Response
     {
         if (empty($path)) {
             throw new BadRequestHttpException('Image path cannot be empty');
         }
 
-        $params = $request->query->all();
-        return $this->glideService->getImageResponse($path, $params);
+        $params = $this->glideService->validateParams($request->query->all());
+        return $this->glideService->getImageResponse($path, $params, $request);
     }
 }
