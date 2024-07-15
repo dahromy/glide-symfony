@@ -28,7 +28,6 @@ dah_romy_glide:
             w: 600
             h: 400
             fit: crop
-    sign_key: 'your-secret-key'
 ```
 
 ## Usage
