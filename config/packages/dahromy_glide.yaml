@@ -1,0 +1,53 @@
+dahromy_glide:
+    source: '%kernel.project_dir%/public'
+    source_path_prefix: ''
+    cache: '%kernel.project_dir%/var/cache/glide'
+    cache_path_prefix: ''
+    temp_dir: '%kernel.project_dir%/var/cache/glide'
+    group_cache_in_folders: true
+    cache_with_file_extensions: false
+    cache_path_callable: null
+    watermarks: '%kernel.project_dir%/public/watermarks'
+    watermarks_path_prefix: ''
+    driver: 'gd'  # Options: 'gd' or 'imagick'
+    max_image_size: '2000*2000'
+    defaults:
+        q: 90  # Quality (0-100)
+        fm: 'auto'  # Format (jpg, png, gif, webp, auto)
+        or: 0  # Orientation (0-360)
+        flip: false
+        crop: ~
+        w: ~  # Width
+        h: ~  # Height
+        fit: 'contain'  # Options: contain, max, fill, stretch, crop
+        dpr: 1  # Device Pixel Ratio (0.1-8)
+        bri: 0  # Brightness (-100 to 100)
+        con: 0  # Contrast (-100 to 100)
+        gam: 1  # Gamma (0.1-9.99)
+        sharp: 0  # Sharpness (0-100)
+        blur: 0  # Blur (0-100)
+        pixel: 0  # Pixelate (0-1000)
+        filt: ~  # Filter (greyscale, sepia)
+        mark: ~  # Watermark image path
+        markw: ~  # Watermark width
+        markh: ~  # Watermark height
+        markx: ~  # Watermark X position
+        marky: ~  # Watermark Y position
+        markpad: ~  # Watermark padding
+        markpos: 'center'  # Watermark position (top-left, top, top-right, left, center, right, bottom-left, bottom, bottom-right)
+        markalpha: 100  # Watermark opacity (0-100)
+        bg: ~  # Background color
+        border: ~  # Border
+    presets:
+        thumbnail:
+            w: 200
+            h: 200
+            fit: 'crop'
+        medium:
+            w: 600
+            h: 400
+            fit: 'contain'
+        large:
+            w: 1200
+            q: 90
+            fm: 'webp'
