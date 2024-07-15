@@ -13,4 +13,8 @@ return function (RoutingConfigurator $routes) {
         ->controller('DahRomy\Glide\Controller\GlideController::serveImage')
         ->requirements(['path' => '.+', 'preset' => '[a-zA-Z0-9_-]+'])
         ->methods([Request::METHOD_GET]);
+
+    $routes->add('image_list', '/images')
+        ->controller('DahRomy\Glide\Controller\ImageController::listImages')
+        ->methods([Request::METHOD_GET]);
 };
