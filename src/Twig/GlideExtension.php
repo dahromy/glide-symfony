@@ -71,7 +71,7 @@ class GlideExtension extends AbstractExtension
      */
     private function generateSignedImageUrl($path, array $params): string
     {
-        $params = $this->glideService->normalizeParams($params);
+        $params = $this->glideService->validateParams($params);
         $signedParams = $this->glideService->generateSignedParams($path, $params);
 
         return $this->glideService->getImageUrl($path, $signedParams);
