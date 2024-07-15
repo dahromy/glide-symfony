@@ -28,6 +28,9 @@ glide:
     driver: gd # Options: gd, imagick
     use_signed_urls: true
     sign_key: '%env(GLIDE_SIGN_KEY)%'
+    defaults:
+        q: 90
+        fm: 'auto'
     presets:
         small:
             w: 200
@@ -43,9 +46,7 @@ glide:
 
 ### In Twig Templates
 
-You can use the `glide_asset` Twig function or the `glide` filter to generate URLs for your images:
-
-1. Using the `glide_asset` function:
+You can use the `glide_asset` Twig function to generate URLs for your images:
 
 ```twig
 <img src="{{ glide_asset('path/to/image.jpg', {w: 300, h: 200}) }}" alt="My Image">
@@ -55,18 +56,6 @@ Or use a preset:
 
 ```twig
 <img src="{{ glide_asset('path/to/image.jpg', {}, 'small') }}" alt="My Image">
-```
-
-2. Using the `glide` filter:
-
-```twig
-<img src="{{ 'path/to/image.jpg'|glide({w: 300, h: 200}) }}" alt="My Image">
-```
-
-With a preset:
-
-```twig
-<img src="{{ 'path/to/image.jpg'|glide({}, 'small') }}" alt="My Image">
 ```
 
 ### In Controllers
