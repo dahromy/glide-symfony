@@ -40,14 +40,14 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('defaults')
                 ->addDefaultsIfNotSet()
                 ->children()
-                    ->call([$this, 'addImageManipulationOptions'])
+                    ->append($this->addImageManipulationOptions())
                 ->end()
             ->end()
             ->arrayNode('presets')
                 ->useAttributeAsKey('name')
                 ->arrayPrototype()
                     ->children()
-                        ->call([$this, 'addImageManipulationOptions'])
+                        ->append($this->addImageManipulationOptions())
                     ->end()
                 ->end()
             ->end()
@@ -56,8 +56,9 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addImageManipulationOptions(ArrayNodeDefinition $node): void
+    private function addImageManipulationOptions(): ArrayNodeDefinition
     {
+        $node = new ArrayNodeDefinition('image_options');
         $node
             ->children()
                 ->integerNode('q')->min(0)->max(100)->end()
@@ -87,5 +88,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('bg')->end()
                 ->scalarNode('border')->end()
             ->end();
+        
+        return $node;
     }
 }
