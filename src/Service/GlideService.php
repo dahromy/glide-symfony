@@ -75,4 +75,9 @@ class GlideService
         $presets = $this->getPresets();
         return $presets[$preset] ?? [];
     }
+
+    public function manipulate(string $path, array $params): string
+    {
+        return $this->server->makeImage($path, $params);
+    }
 }
