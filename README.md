@@ -39,18 +39,6 @@ glide:
             fit: crop
 ```
 
-### Configuration Options
-
-- `source`: The directory where your source images are stored.
-- `cache`: The directory where manipulated images will be cached.
-- `max_image_size`: The maximum allowed image dimensions (width x height).
-- `driver`: The image processing library to use (GD or Imagick).
-- `use_signed_urls`: Whether to use signed URLs for security (recommended).
-- `sign_key`: The secret key used for signing URLs (should be set in your .env file).
-- `presets`: Predefined sets of image manipulation parameters.
-
-You can customize these values according to your needs.
-
 ## Usage
 
 ### In Twig Templates
