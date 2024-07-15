@@ -59,7 +59,6 @@ class Configuration implements ConfigurationInterface
     {
         $node = new NodeBuilder();
         return $node
-            ->children()
                 ->integerNode('q')->min(0)->max(100)->end()
                 ->enumNode('fm')->values(['jpg', 'png', 'gif', 'webp', 'auto'])->end()
                 ->integerNode('or')->min(0)->max(360)->end()
