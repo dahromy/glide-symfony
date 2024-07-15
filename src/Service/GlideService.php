@@ -52,6 +52,9 @@ class GlideService
         return $this->server->getApi()->validateParams($params);
     }
 
+    /**
+     * @throws SignatureException
+     */
     private function validateSignature(string $path, array $params): void
     {
         SignatureFactory::create($this->signatureKey)->validateRequest($path, $params);
