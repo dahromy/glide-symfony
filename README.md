@@ -15,7 +15,7 @@ For more information about Glide and its capabilities, please refer to the [offi
 You can install the bundle using Composer:
 
 ```bash
-composer require dahromy/glide-bundle
+composer require dahromy/glide-symfony
 ```
 
 ## Configuration
@@ -26,10 +26,7 @@ After installing the bundle, you need to configure it in your `config/packages/g
 glide:
     source: '%kernel.project_dir%/public/images'
     cache: '%kernel.project_dir%/public/cache'
-    max_image_size: 2000x2000
     driver: gd # Options: gd, imagick
-    use_signed_urls: true
-    sign_key: '%env(GLIDE_SIGN_KEY)%'
     defaults:
         q: 90
         fm: 'auto'
