@@ -1,6 +1,8 @@
 # DahRomyGlideBundle
 
-DahRomyGlideBundle is a Symfony bundle that integrates the Glide image manipulation library into your Symfony application. It provides an easy way to manipulate and serve images on-the-fly.
+DahRomyGlideBundle is a Symfony bundle that integrates the [Glide](https://glide.thephpleague.com/) image manipulation library into your Symfony application. It provides an easy way to manipulate and serve images on-the-fly.
+
+For more information about Glide and its capabilities, please refer to the [official Glide documentation](https://glide.thephpleague.com/).
 
 ## Requirements
 
