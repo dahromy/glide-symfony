@@ -33,10 +33,12 @@ class GlideExtension extends AbstractExtension
      */
     public function glideFilter(string $path, array $params = [], string $preset = null): string
     {
-        $presetParams = $preset ? $this->glideService->getPresetParams($preset) : [];
-        $params = array_merge($presetParams, $params);
+        $allParams = array_merge(
+            $preset ? $this->glideService->getPresetParams($preset) : [],
+            $params
+        );
 
-        return $this->generateSignedImageUrl(ltrim($path, '/'), $params);
+        return $this->generateSignedImageUrl(ltrim($path, '/'), $allParams);
     }
 
     /**
