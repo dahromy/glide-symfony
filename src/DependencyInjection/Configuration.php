@@ -3,7 +3,6 @@
 namespace DahRomy\Glide\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeBuilder;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -55,10 +54,10 @@ class Configuration implements ConfigurationInterface
             ->end();
     }
 
-    private function addImageManipulationOptions(): NodeBuilder
+    private function addImageManipulationOptions(): ArrayNodeDefinition
     {
-        $node = new NodeBuilder();
-        return $node
+        $node = new ArrayNodeDefinition('image_options');
+        $node->children()
                 ->integerNode('q')->min(0)->max(100)->end()
                 ->enumNode('fm')->values(['jpg', 'png', 'gif', 'webp', 'auto'])->end()
                 ->integerNode('or')->min(0)->max(360)->end()
@@ -84,6 +83,9 @@ class Configuration implements ConfigurationInterface
                 ->enumNode('markpos')->values(['top-left', 'top', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom', 'bottom-right'])->end()
                 ->integerNode('markalpha')->min(0)->max(100)->end()
                 ->scalarNode('bg')->end()
-                ->scalarNode('border')->end();
+                ->scalarNode('border')->end()
+            ->end();
+        
+        return $node;
     }
 }
