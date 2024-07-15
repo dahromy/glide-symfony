@@ -6,6 +6,7 @@ use Closure;
 use DahRomy\Glide\Service\GlideService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class GlideExtension extends AbstractExtension
 {
@@ -21,6 +22,26 @@ class GlideExtension extends AbstractExtension
         return [
             new TwigFilter('glide', Closure::fromCallable([$this, 'glideFilter']), ['is_safe' => ['html']]),
         ];
+    }
+
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('glide_asset', Closure::fromCallable([$this, 'glideAssetFunction']), ['is_safe' => ['html']]),
+        ];
+    }
+
+    /**
+     * Generate a Glide asset URL.
+     *
+     * @param string $path The path to the image.
+     * @param array $params An optional array of parameters to apply to the glide filter.
+     * @param string|null $preset An optional preset to apply to the glide filter.
+     * @return string The generated image URL.
+     */
+    public function glideAssetFunction(string $path, array $params = [], string $preset = null): string
+    {
+        return $this->glideFilter($path, $params, $preset);
     }
 
     /**
