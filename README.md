@@ -2,6 +2,12 @@
 
 DahRomyGlideBundle is a Symfony bundle that integrates the Glide image manipulation library into your Symfony application. It provides an easy way to manipulate and serve images on-the-fly.
 
+## Requirements
+
+- PHP 7.4 or higher
+- Symfony 5.0 or higher
+- GD Library or Imagick PHP extension
+
 ## Installation
 
 You can install the bundle using Composer:
