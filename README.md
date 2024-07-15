@@ -18,13 +18,12 @@ composer require dahromy/glide-bundle
 
 ## Configuration
 
-After installing the bundle, you need to configure it in your `config/packages/dah_romy_glide.yaml` file:
+After installing the bundle, you need to configure it in your `config/packages/glide.yaml` file:
 
 ```yaml
-dah_romy_glide:
+glide:
     source: '%kernel.project_dir%/public/images'
     cache: '%kernel.project_dir%/public/cache'
-    base_url: '/glide'
     presets:
         small:
             w: 200
