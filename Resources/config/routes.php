@@ -4,8 +4,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return function (RoutingConfigurator $routes) {
-    $routes->add('dahromy_glide_asset', '/glide/{path}')
+    $routes->add('dahromy_glide_asset', '/media/glide/{preset}/{path}')
         ->controller('DahRomy\Glide\Controller\GlideController::serveImage')
-        ->requirements(['path' => '.+'])
+        ->requirements(['path' => '.+', 'preset' => '[a-zA-Z0-9_-]+'])
         ->methods([Request::METHOD_GET]);
 };
