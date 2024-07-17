@@ -61,7 +61,11 @@ class GlideService
 
     public function getPresetParams(string $preset): array
     {
-        return $this->presets[$preset] ?? [];
+        if (!isset($this->presets[$preset])) {
+            throw new \InvalidArgumentException(sprintf('Preset "%s" does not exist', $preset));
+        }
+
+        return $this->presets[$preset];
     }
 
     /**
@@ -90,6 +94,10 @@ class GlideService
 
     public function validateParams(array $params): array
     {
+        if (count($params) === 0) {
+            return $this->getDefaultParams();
+        }
+
         $validParams = [];
         foreach ($params as $key => $value) {
             if ($this->isValidGlideParameter($key, $value)) {
@@ -136,5 +144,10 @@ class GlideService
     public function normalizeParams(array $params = []): array
     {
         return $this->server->getAllParams($params);
+    }
+
+    public function getDefaultParams(): array
+    {
+        return $this->server->getDefaults();
     }
 }
